@@ -20,6 +20,7 @@ module.exports = {
   new: (req, res) => {
     res.render("users/new");
   },
+  //CRUD method create
   create: (req, res, next) => {
     let userParams = {
       name: {
@@ -46,9 +47,11 @@ module.exports = {
     if (redirectPath) res.redirect(redirectPath);
     else next();
   },
+  //CRUD method (Read)
   show: (req, res, next) => {
     let userId = req.params.id;
     User.findById(userId)
+    //collecting userIDs for request params
       .then(user => {
         res.locals.user = user;
         next();
@@ -60,5 +63,6 @@ module.exports = {
   },
   showView: (req, res) => {
     res.render("users/show");
+    //when a user's name is clicked show page will display
   }
 };

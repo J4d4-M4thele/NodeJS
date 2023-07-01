@@ -3,7 +3,7 @@ const mongoose = require("mongoose"),
   Course = require("./models/course");
 var testCourse, testSubscriber;
 mongoose.connect(
-  "mongodb://localhost:27017/recipe_db",
+  "mongodb://127.0.0.1:27017/recipe_db",
   { useNewUrlParser: true }
 );
 mongoose.set("useCreateIndex", true);
@@ -13,6 +13,7 @@ Subscriber.remove({})
   .then(() => {
     return Course.remove({});
   })
+  //remove is part of CRUD (Delete)
   .then(items => console.log(`Removed ${items.n} records!`))
   .then(() => {
     return Subscriber.create({
@@ -28,6 +29,7 @@ Subscriber.remove({})
     return Subscriber.findOne({
       name: "Jon"
     });
+    //find is part of CRUD (Read)
   })
   .then(subscriber => {
     testSubscriber = subscriber;
@@ -40,6 +42,7 @@ Subscriber.remove({})
       zipCode: 12345,
       items: ["cherry", "heirloom"]
     });
+    //Create is part of CRUD (Create)
   })
   .then(course => {
     testCourse = course;
@@ -49,6 +52,7 @@ Subscriber.remove({})
     testSubscriber.courses.push(testCourse);
     testSubscriber.save();
   })
+  //Save is part of CRUD (Create)
   .then(() => {
     return Subscriber.populate(testSubscriber, "courses");
   })

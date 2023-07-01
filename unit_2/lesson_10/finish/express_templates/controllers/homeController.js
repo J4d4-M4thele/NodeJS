@@ -7,4 +7,7 @@ exports.sendReqParam = (req, res) => {
 
 exports.respondWithName = (req, res) => {
   res.render("index");
+  //renders index.ejs template(HTML file)
 };
+//if name is typed into url
+//index.ejs will display in browser

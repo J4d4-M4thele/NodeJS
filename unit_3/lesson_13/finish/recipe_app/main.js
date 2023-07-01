@@ -5,22 +5,31 @@ const express = require("express"),
   errorController = require("./controllers/errorController"),
   homeController = require("./controllers/homeController"),
   layouts = require("express-ejs-layouts"),
+  //Require the MongoDB module.
   MongoDB = require("mongodb").MongoClient,
   dbURL = "mongodb://localhost:27017",
+  //connect with url
   dbName = "recipe_db";
+  //database that'll be used
 
+  //making connection to database (local server)
 MongoDB.connect(
   dbURL,
   (error, client) => {
     if (error) throw error;
+    //get recipe database from server connection
     let db = client.db(dbName);
+    //finding all records in contacts collection
     db.collection("contacts")
       .find()
+      //finding all records
       .toArray((error, data) => {
         if (error) throw error;
         console.log(data);
+        //all contacts go into variable data
+        //printed to the REPL environment 
       });
-
+     //inserting data into database
     db.collection("contacts").insert(
       {
         name: "Freddie Mercury",
@@ -28,6 +37,7 @@ MongoDB.connect(
       },
       (error, db) => {
         if (error) throw error;
+        //log resulting errors/ save
         console.log(db);
       }
     );

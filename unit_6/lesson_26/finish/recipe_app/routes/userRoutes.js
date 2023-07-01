@@ -1,8 +1,10 @@
 "use strict";
 
+//Require Express.js Router and users controller.
 const router = require("express").Router(),
   usersController = require("../controllers/usersController");
 
+  //Add CRUD routes (Create, Read, Update, Delete)
 router.get("/", usersController.index, usersController.indexView);
 router.get("/new", usersController.new);
 router.post(

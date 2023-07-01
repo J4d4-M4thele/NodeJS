@@ -1,5 +1,5 @@
 "use strict";
-
+//courses object
 var courses = [
   {
     title: "Event Driven Cakes",
@@ -15,9 +15,11 @@ var courses = [
   }
 ];
 
+//callback functions
 exports.showCourses = (req, res) => {
   res.render("courses", {
     offeredCourses: courses
+    //refers to courses.ejs
   });
 };
 

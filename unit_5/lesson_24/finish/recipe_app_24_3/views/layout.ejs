@@ -26,8 +26,10 @@
 				<span class="button">Contact</span>
 			</a>
 		</div>
+		<!-- login status div -->
 		<div class="login-status">
 			<% if (loggedIn) { %>
+				<!-- check whether user is logged in(if so display username) -->
 			<div class="bubble logged-in">
 				Logged in as <a href="<%=`/users/${currentUser._id}`%>">
 					<%= currentUser.fullName %></a>
@@ -37,6 +39,7 @@
 			</div>
 			<%} else {%>
 			<div class="bubble log-in">
+				<!-- display login link -->
 				<a href="/users/login">Log In</a>
 			</div>
 			<% } %>

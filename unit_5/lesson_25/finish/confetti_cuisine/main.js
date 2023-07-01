@@ -19,7 +19,7 @@ const express = require("express"),
   User = require("./models/user");
 
 mongoose.connect(
-  "mongodb://localhost:27017/confetti_cuisine",
+  "mongodb://127.0.0.1:27017/confetti_cuisine",
   { useNewUrlParser: true }
 );
 mongoose.set("useCreateIndex", true);
@@ -43,6 +43,7 @@ router.use(
 );
 router.use(express.json());
 
+//Configure cookieParser with a secret key.
 router.use(cookieParser("secretCuisine123"));
 router.use(
   expressSession({
@@ -52,13 +53,19 @@ router.use(
     },
     resave: false,
     saveUninitialized: false
+    //Configure Express.js to use sessions.
   })
 );
 router.use(connectFlash());
 
+//Configure Express.js to initialize and use passport. 
+//Instruct passport
 router.use(passport.initialize());
+//Instruct passport to use sessions.
 router.use(passport.session());
+//Set up the default login strategy.
 passport.use(User.createStrategy());
+//Set up passport to compact, encrypt, and decrypt user data.
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -66,6 +73,7 @@ router.use((req, res, next) => {
   res.locals.loggedIn = req.isAuthenticated();
   res.locals.currentUser = req.user;
   res.locals.flashMessages = req.flash();
+  //Assign flash messages to a local variable.
   next();
 });
 
@@ -74,13 +82,18 @@ router.get("/", homeController.index);
 router.get("/users", usersController.index, usersController.indexView);
 router.get("/users/new", usersController.new);
 router.post(
+  //Add validation middleware to the user create route.
   "/users/create",
   usersController.validate,
   usersController.create,
   usersController.redirectView
 );
+
+//route to login action
 router.get("/users/login", usersController.login);
+//Send posted data to an authenticate action.
 router.post("/users/login", usersController.authenticate);
+//Add a route to logout and redirect to a view.
 router.get("/users/logout", usersController.logout, usersController.redirectView);
 router.get("/users/:id/edit", usersController.edit);
 router.put("/users/:id/update", usersController.update, usersController.redirectView);

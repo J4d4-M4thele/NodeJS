@@ -5,7 +5,7 @@ const mongoose = require("mongoose"),
   User = require("./models/user"),
   Course = require("./models/course");
 
-mongoose.connect("mongodb://localhost/recipe_db");
+mongoose.connect("mongodb://127.0.0.1/recipe_db");
 mongoose.connection;
 
 // USERS

@@ -114,11 +114,13 @@ module.exports = {
       });
   },
   respondJSON: (req, res) => {
+    //Return a courses array through the data property
     res.json({
       status: httpStatus.OK,
       data: res.locals
     });
   },
+  //Return an error message and status code of 500 if an error occurs.
   errorJSON: (error, req, res, next) => {
     let errorObject;
     if (error) {
@@ -136,8 +138,10 @@ module.exports = {
   },
   filterUserCourses: (req, res, next) => {
     let currentUser = res.locals.currentUser;
+    //check if user is logged in
     if (currentUser) {
       let mappedCourses = res.locals.courses.map(course => {
+        //return array of courses user's courses matches on course list
         let userJoined = currentUser.courses.some(userCourse => {
           return userCourse.equals(course._id);
         });
@@ -152,7 +156,9 @@ module.exports = {
   join: (req, res, next) => {
     let courseId = req.params.id,
       currentUser = req.user;
+      //check if user is logged in
     if (currentUser) {
+      //find user and connect them to selected courses
       User.findByIdAndUpdate(currentUser, {
         $addToSet: {
           courses: courseId

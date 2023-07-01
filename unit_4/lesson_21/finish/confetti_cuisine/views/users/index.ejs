@@ -13,12 +13,14 @@
     </tr>
   </thead>
   <tbody>
+    <!-- generates a row for each subscriber -->
     <% users.forEach(user => { %>
     <tr>
       <td>
         <a href="<%=`/users/${user._id}`%>">
           <%= user.fullName %>
         </a>
+        <!-- subscribers are in anchor tags -->
       </td>
       <td>
         <%= user.email %>
@@ -30,9 +32,11 @@
         <a href="<%=`/users/${user._id}/edit`%>">
           Edit
         </a>
+        <!-- edit link -->
       </td>
       <td>
         <a href="<%=`/users/${user._id}/delete?_method=DELETE` %>" onclick="return confirm('Are you sure you want to delete this record?')" a>Delete</a>
+        <!-- delete link -->
       </td>
     </tr>
     <% }); %>

@@ -9,6 +9,7 @@ const httpStatus = require("http-status-codes"),
       "/info": (req, res) => {
         res.writeHead(httpStatus.OK, {
           "Content-Type": "text/plain"
+          //no page yet, just text preparing routing
         });
         res.end("Welcome to the Info Page!");
       }
@@ -21,6 +22,7 @@ exports.handle = (req, res) => {
     if (routes[req.method][req.url]) {
       routes[req.method][req.url](req, res);
     } else {
+      //when route that isn't in map is entered into URL
       res.writeHead(httpStatus.NOT_FOUND, htmlContentType);
       res.end("<h1>No such file exists</h1>");
     }
@@ -36,3 +38,4 @@ exports.get = (url, action) => {
 exports.post = (url, action) => {
   routes["POST"][url] = action;
 };
+//preparation for requests for a fully functional website

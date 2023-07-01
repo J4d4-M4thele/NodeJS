@@ -28,7 +28,7 @@ module.exports = {
   new: (req, res) => {
     res.render("subscribers/new");
   },
-
+//C in CRUD
   create: (req, res, next) => {
     let subscriberParams = getSubscriberParams(req.body);
     Subscriber.create(subscriberParams)
@@ -48,6 +48,7 @@ module.exports = {
     if (redirectPath !== undefined) res.redirect(redirectPath);
     else next();
   },
+  //R in CRUD
   show: (req, res, next) => {
     let subscriberId = req.params.id;
     Subscriber.findById(subscriberId)
@@ -64,7 +65,7 @@ module.exports = {
   showView: (req, res) => {
     res.render("subscribers/show");
   },
-
+//U in CRUD
   edit: (req, res, next) => {
     let subscriberId = req.params.id;
     Subscriber.findById(subscriberId)
@@ -78,7 +79,7 @@ module.exports = {
         next(error);
       });
   },
-
+//U in CRUD
   update: (req, res, next) => {
     let subscriberId = req.params.id,
       subscriberParams = getSubscriberParams(req.body);
@@ -96,7 +97,7 @@ module.exports = {
         next(error);
       });
   },
-
+//D in CRUD
   delete: (req, res, next) => {
     let subscriberId = req.params.id;
     Subscriber.findByIdAndRemove(subscriberId)

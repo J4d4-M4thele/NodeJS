@@ -15,6 +15,7 @@ module.exports = {
       });
   },
   indexView: (req, res) => {
+    //displays data in JSON format
     if (req.query.format === "json") {
       res.json(res.locals.courses);
     } else {

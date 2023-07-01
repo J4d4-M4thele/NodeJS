@@ -163,24 +163,32 @@ module.exports = {
     res.locals.redirect = "/";
     next();
   },
-  // verifyToken: (req, res, next) => {
-  //   let token = req.query.apiToken;
-  //   if (token) {
-  //     User.findOne({ apiToken: token })
-  //       .then(user => {
-  //         if (user) next();
-  //         else next(new Error("Invalid API token."));
-  //       })
-  //       .catch(error => {
-  //         next(new Error(error.message));
-  //       });
-  //   } else {
-  //     next(new Error("Invalid API token."));
-  //   }
-  // },
+  //creating function to verify token
+  verifyToken: (req, res, next) => {
+    let token = req.query.apiToken;
+    //check whether token exists
+    if (token) {
+      //Search for a user with the provided API token.
+      User.findOne({ apiToken: token })
+        .then(user => {
+          //Call the next middleware function if tokens match
+          if (user) next();
+          //Respond with error message if tokens don’t match.
+          else next(new Error("Invalid API token."));
+        })
+        //pass error to error handler
+        .catch(error => {
+          next(new Error(error.message));
+        });
+    } else {
+      next(new Error("Invalid API token."));
+    }
+  },
+  //authenticate with using passport
   apiAuthenticate: (req, res, next) => {
     passport.authenticate("local", (errors, user) => {
       if (user) {
+        //Sign the JWT if a user exists with matching email and password.
         let signedToken = jsonWebToken.sign(
           {
             data: user._id,
@@ -190,22 +198,28 @@ module.exports = {
         );
         res.json({
           success: true,
+          //respond with JWT(JSON web tokens)
           token: signedToken
         });
       } else
         res.json({
           success: false,
+          //respond with error
           message: "Could not authenticate user."
         });
     })(req, res, next);
   },
   verifyJWT: (req, res, next) => {
+    //retrieve JWT from request headers
     let token = req.headers.token;
     if (token) {
+      //verify and decode its payload
       jsonWebToken.verify(token, "secret_encoding_passphrase", (errors, payload) => {
         if (payload) {
+          //check for user with decoded ID from payload
           User.findById(payload.data).then(user => {
             if (user) {
+              //call next function if user is found with JWT ID
               next();
             } else {
               res.status(httpStatus.FORBIDDEN).json({
@@ -215,6 +229,7 @@ module.exports = {
             }
           });
         } else {
+          //Respond with an error message if the token can’t be verified.
           res.status(httpStatus.UNAUTHORIZED).json({
             error: true,
             message: "Cannot verify API token."
@@ -223,6 +238,7 @@ module.exports = {
         }
       });
     } else {
+      //Respond with an error message if no token is found in the request headers.
       res.status(httpStatus.UNAUTHORIZED).json({
         error: true,
         message: "Provide Token"

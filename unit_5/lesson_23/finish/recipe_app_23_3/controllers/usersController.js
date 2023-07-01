@@ -121,22 +121,27 @@ module.exports = {
         next();
       });
   },
+  //redirects to login page(login.ejs)
   login: (req, res) => {
     res.render("users/login");
   },
   authenticate: (req, res, next) => {
     User.findOne({ email: req.body.email })
       .then(user => {
+        //call pasword user model
         if (user) {
           user.passwordComparison(req.body.password).then(passwordsMatch => {
             if (passwordsMatch) {
+              //database password matches form password
               res.locals.redirect = `/users/${user._id}`;
               req.flash("success", `${user.fullName}'s logged in successfully!`);
               res.locals.user = user;
             } else {
+              //database password doesn't match form password
               req.flash("error", "Failed to log in user account: Incorrect Password.");
               res.locals.redirect = "/users/login";
             }
+            //Call the next middleware function with redirect path and flash message set.
             next();
           });
         } else {
@@ -146,6 +151,7 @@ module.exports = {
         }
       })
       .catch(error => {
+        //Log errors to console and pass to the next middleware error handler.
         console.log(`Error logging in user: ${error.message}`);
         next(error);
       });
@@ -166,6 +172,7 @@ module.exports = {
         min: 5,
         max: 5
       })
+      //adds validations to ensure passwords are more secure
       .equals(req.body.zipCode);
     req.check("password", "Password cannot be empty").notEmpty();
 

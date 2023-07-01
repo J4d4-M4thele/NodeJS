@@ -36,14 +36,17 @@ module.exports = {
     if (req.skip) next();
     let newUser = new User(getUserParams(req.body));
     User.register(newUser, req.body.password, (error, user) => {
+      //register new users
       if (user) {
         req.flash("success", `${user.fullName}'s account created successfully!`);
         res.locals.redirect = "/users";
         next();
+        //successful user creation
       } else {
         req.flash("error", `Failed to create user account because: ${error.message}.`);
         res.locals.redirect = "/users/new";
         next();
+        //errors logged in flash messaging
       }
     });
   },
@@ -119,7 +122,10 @@ module.exports = {
   login: (req, res) => {
     res.render("users/login");
   },
+
+  //Call on passport to authenticate a user via the local strategy.
   authenticate: passport.authenticate("local", {
+    //set up success and failure flash messages and redirect paths based on the user’s authentication status
     failureRedirect: "/users/login",
     failureFlash: "Failed to login.",
     successRedirect: "/",
@@ -156,6 +162,7 @@ module.exports = {
       }
     });
   },
+  //adding user actionto log out
   logout: (req, res, next) => {
     req.logout();
     req.flash("success", "You have been logged out!");

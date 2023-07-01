@@ -16,7 +16,7 @@ const express = require("express"),
 mongoose.Promise = global.Promise;
 
 mongoose.connect(
-  "mongodb://localhost:27017/recipe_db",
+  "mongodb://127.0.0.1:27017/recipe_db",
   { useNewUrlParser: true }
 );
 mongoose.set("useCreateIndex", true);
@@ -41,6 +41,8 @@ router.use(
 router.use(
   methodOverride("_method", {
     methods: ["POST", "GET"]
+    //overrides get and post requests so that the put method can be implemented
+    //allows for updates
   })
 );
 
@@ -53,7 +55,9 @@ router.get("/contact", homeController.getSubscriptionPage);
 router.get("/users", usersController.index, usersController.indexView);
 router.get("/users/new", usersController.new);
 router.post("/users/create", usersController.create, usersController.redirectView);
+//add routes to handle viewing
 router.get("/users/:id/edit", usersController.edit);
+//process data from edit form and display the user show page
 router.put("/users/:id/update", usersController.update, usersController.redirectView);
 router.delete("/users/:id/delete", usersController.delete, usersController.redirectView);
 router.get("/users/:id", usersController.show, usersController.showView);
@@ -66,6 +70,7 @@ router.post(
   subscribersController.redirectView
 );
 router.get("/subscribers/:id/edit", subscribersController.edit);
+//directs us to edit page so becuase we are'nt creating a new record, but updatng an existing one
 router.put(
   "/subscribers/:id/update",
   subscribersController.update,

@@ -2,6 +2,7 @@
 
 const User = require("../models/user"),
   passport = require("passport"),
+  //security for logging in (passport)
   getUserParams = body => {
     return {
       name: {
@@ -38,6 +39,7 @@ module.exports = {
     User.register(newUser, req.body.password, (error, user) => {
       if (user) {
         req.flash("success", `${user.fullName}'s account created successfully!`);
+        //works hand-in-hand with userRoutes.js
         res.locals.redirect = "/users";
         next();
       } else {

@@ -20,7 +20,7 @@ const express = require("express"),
 
 mongoose.Promise = global.Promise;
 mongoose.connect(
-  "mongodb://localhost:27017/recipe_db",
+  "mongodb://127.0.0.1:27017/recipe_db",
   { useNewUrlParser: true ,
 	 useFindAndModify: false }
 );

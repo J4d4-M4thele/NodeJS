@@ -13,7 +13,7 @@ const express = require("express"),
 mongoose.Promise = global.Promise;
 
 mongoose.connect(
-  "mongodb://localhost:27017/recipe_db",
+  "mongodb://127.0.0.1:27017/recipe_db",
   { useNewUrlParser: true }
 );
 mongoose.set("useCreateIndex", true);
@@ -39,7 +39,7 @@ app.use(homeController.logRequestPaths);
 
 app.get("/", homeController.index);
 app.get("/contact", homeController.getSubscriptionPage);
-
+//when user is typed in route indexView will display
 app.get("/users", usersController.index, usersController.indexView);
 app.get("/subscribers", subscribersController.index, subscribersController.indexView);
 app.get("/courses", coursesController.index, coursesController.indexView);

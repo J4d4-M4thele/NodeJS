@@ -35,10 +35,12 @@ module.exports = {
   },
 
   create: (req, res, next) => {
+    //Add the create action to register users.
     if (req.skip) next();
     let newUser = new User(getUserParams(req.body));
     User.register(newUser, req.body.password, (e, user) => {
       if (user) {
+        //Respond with flash messages.
         req.flash("success", `${user.fullName}'s account created successfully!`);
         res.locals.redirect = "/users";
         next();
@@ -118,6 +120,7 @@ module.exports = {
       });
   },
   login: (req, res) => {
+    //Add an action to render my form for browser viewing.
     res.render("users/login");
   },
   validate: (req, res, next) => {
@@ -136,6 +139,7 @@ module.exports = {
         min: 5,
         max: 5
       })
+      //Sanitize and check input field data.
       .equals(req.body.zipCode);
     req.check("password", "Password cannot be empty").notEmpty();
     req.getValidationResult().then(error => {
@@ -143,6 +147,7 @@ module.exports = {
         let messages = error.array().map(e => e.msg);
         req.skip = true;
         req.flash("error", messages.join(" and "));
+        //Collect errors, and respond with flash messages.
         res.locals.redirect = "/users/new";
         next();
       } else {
@@ -151,6 +156,7 @@ module.exports = {
     });
   },
   authenticate: passport.authenticate("local", {
+    //Add authentication middleware with redirect and flashmessage options.
     failureRedirect: "/users/login",
     failureFlash: "Failed to login.",
     successRedirect: "/",
@@ -158,6 +164,7 @@ module.exports = {
   }),
   logout: (req, res, next) => {
     req.logout();
+    //action to let users logg out
     req.flash("success", "You have been logged out!");
     res.locals.redirect = "/";
     next();

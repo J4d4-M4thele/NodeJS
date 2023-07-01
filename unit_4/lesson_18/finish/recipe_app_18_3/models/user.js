@@ -2,6 +2,7 @@
 
 const mongoose = require("mongoose"),
   { Schema } = mongoose,
+  //creating the user schema
   userSchema = new Schema(
     {
       name: {
@@ -14,6 +15,7 @@ const mongoose = require("mongoose"),
           trim: true
         }
       },
+      //adding name properties
       email: {
         type: String,
         required: true,
@@ -33,14 +35,19 @@ const mongoose = require("mongoose"),
       subscribedAccount: {
         type: Schema.Types.ObjectId,
         ref: "Subscriber"
+        //Add a subscribedAccount to connect users to subscribers.
       }
     },
+    //adding validations to properties for better quality data
     {
       timestamps: true
     }
+    //Add a timestamps property to record createdAt and updatedAt dates.
   );
 
-userSchema.virtual("fullName").get(function() {
+userSchema.virtual/*virtual attribute*/("fullName").get(function() {
   return `${this.name.first} ${this.name.last}`;
+  //fullname method returns both name and surname
 });
 module.exports = mongoose.model("User", userSchema);
+//export the userSchema using keyword User

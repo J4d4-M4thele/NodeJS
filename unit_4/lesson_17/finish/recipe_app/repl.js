@@ -1,3 +1,4 @@
+//has all repl commands
 const mongoose = require("mongoose"),
   Subscriber = require("./models/subscriber"),
   Course = require("./models/course");
@@ -5,8 +6,9 @@ const mongoose = require("mongoose"),
 var testCourse, testSubscriber;
 
 mongoose.connect(
-  "mongodb://localhost:27017/recipe_db",
+  "mongodb://127.0.0.1:27017/recipe_db",
   { useNewUrlParser: true }
+  //{ useUnifiedTopology: true }
 );
 mongoose.Promise = global.Promise;
 

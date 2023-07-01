@@ -8,7 +8,7 @@ app.use((req, res, next) => {
   console.log(`request made to: ${req.url}`);
   next();
 });
-
+//if items/veg is in URL the response will show
 app.get("/items/:vegetable", (req, res) => {
   let veg = req.params.vegetable;
   res.send(`This is the page for ${veg}`);

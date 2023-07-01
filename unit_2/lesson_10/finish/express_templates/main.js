@@ -1,10 +1,11 @@
 "use strict";
-
+//importing express.js
 const express = require("express"),
   app = express(),
   homeController = require("./controllers/homeController"),
   layouts = require("express-ejs-layouts");
 
+  //port set to 3000
 app.set("port", process.env.PORT || 3000);
 app.set("view engine", "ejs");
 

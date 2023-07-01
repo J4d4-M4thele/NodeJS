@@ -1,6 +1,8 @@
 "use strict";
 
+//require mongoose
 const mongoose = require("mongoose"),
+//schema has properties and validation rules for better quality data input
   { Schema } = mongoose;
 
 var subscriberSchema = new Schema(
@@ -26,14 +28,18 @@ var subscriberSchema = new Schema(
         ref: "Course"
       }
     ]
+    //associates multiple courses
   },
   {
     timestamps: true
   }
 );
 
+
+//getInfo instance method
 subscriberSchema.methods.getInfo = function() {
   return `Name: ${this.name} Email: ${this.email} Zip Code: ${this.zipCode}`;
 };
 
+//export subscriber model
 module.exports = mongoose.model("Subscriber", subscriberSchema);

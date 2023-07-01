@@ -16,7 +16,7 @@ router.get("/courses.html", (req, res) => {
   res.writeHead(httpStatus.OK, contentTypes.html);
   utils.getFile("views/courses.html", res);
 });
-
+//get requests typed in localhost:3000
 router.get("/contact.html", (req, res) => {
   res.writeHead(httpStatus.OK, contentTypes.html);
   utils.getFile("views/contact.html", res);
@@ -26,6 +26,7 @@ router.post("/", (req, res) => {
   res.writeHead(httpStatus.OK, contentTypes.html);
   utils.getFile("views/thanks.html", res);
 });
+//post request send user to thanks page (in the browser)
 
 router.get("/graph.png", (req, res) => {
   res.writeHead(httpStatus.OK, contentTypes.png);

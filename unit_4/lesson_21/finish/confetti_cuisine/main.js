@@ -1,5 +1,6 @@
 "use strict";
 
+//import modules
 const express = require("express"),
   layouts = require("express-ejs-layouts"),
   app = express(),
@@ -12,8 +13,9 @@ const express = require("express"),
   mongoose = require("mongoose"),
   methodOverride = require("method-override");
 
+  //connect to mongoose
 mongoose.connect(
-  "mongodb://localhost:27017/confetti_cuisine",
+  "mongodb://127.0.0.1:27017/confetti_cuisine",
   { useNewUrlParser: true }
 );
 mongoose.set("useCreateIndex", true);
@@ -21,12 +23,15 @@ mongoose.set("useCreateIndex", true);
 app.set("port", process.env.PORT || 3000);
 app.set("view engine", "ejs");
 
+
+//override requests for the put method
 router.use(
   methodOverride("_method", {
     methods: ["POST", "GET"]
   })
 );
 
+//static files come from public folder
 router.use(layouts);
 router.use(express.static("public"));
 
@@ -41,9 +46,12 @@ router.get("/", homeController.index);
 
 router.get("/users", usersController.index, usersController.indexView);
 router.get("/users/new", usersController.new);
+//route to create a user profile
 router.post("/users/create", usersController.create, usersController.redirectView);
 router.get("/users/:id/edit", usersController.edit);
+//route to update subscribers
 router.put("/users/:id/update", usersController.update, usersController.redirectView);
+//route to find subscriber using id
 router.get("/users/:id", usersController.show, usersController.showView);
 router.delete("/users/:id/delete", usersController.delete, usersController.redirectView);
 

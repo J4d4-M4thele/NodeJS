@@ -19,21 +19,25 @@ http
     if (url.indexOf(".html") !== -1) {
       res.writeHead(httpStatus.OK, {
         "Content-Type": "text/html"
+        //html page
       });
       customReadFile(`./views${url}`, res);
     } else if (url.indexOf(".js") !== -1) {
       res.writeHead(httpStatus.OK, {
         "Content-Type": "text/javascript"
+        //script to make webpage functional
       });
       customReadFile(`./public/js${url}`, res);
     } else if (url.indexOf(".css") !== -1) {
       res.writeHead(httpStatus.OK, {
         "Content-Type": "text/css"
+        //css to style webpage
       });
       customReadFile(`./public/css${url}`, res);
     } else if (url.indexOf(".png") !== -1) {
       res.writeHead(httpStatus.OK, {
         "Content-Type": "image/png"
+        //images
       });
       customReadFile(`./public/images${url}`, res);
     } else {

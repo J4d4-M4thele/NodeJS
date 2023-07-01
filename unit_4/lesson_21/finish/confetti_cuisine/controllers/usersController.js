@@ -32,7 +32,7 @@ module.exports = {
   new: (req, res) => {
     res.render("users/new");
   },
-
+//C in CRUD
   create: (req, res, next) => {
     let userParams = getUserParams(req.body);
 
@@ -53,7 +53,7 @@ module.exports = {
     if (redirectPath !== undefined) res.redirect(redirectPath);
     else next();
   },
-
+//R in CRUD
   show: (req, res, next) => {
     let userId = req.params.id;
     User.findById(userId)
@@ -70,7 +70,7 @@ module.exports = {
   showView: (req, res) => {
     res.render("users/show");
   },
-
+//U in CRUD
   edit: (req, res, next) => {
     let userId = req.params.id;
     User.findById(userId)
@@ -84,7 +84,7 @@ module.exports = {
         next(error);
       });
   },
-
+//U in CRUD
   update: (req, res, next) => {
     let userId = req.params.id,
       userParams = getUserParams(req.body);
@@ -102,7 +102,7 @@ module.exports = {
         next(error);
       });
   },
-
+//D in CRUD
   delete: (req, res, next) => {
     let userId = req.params.id;
     User.findByIdAndRemove(userId)

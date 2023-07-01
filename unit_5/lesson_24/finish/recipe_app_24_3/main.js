@@ -21,7 +21,7 @@ const express = require("express"),
 mongoose.Promise = global.Promise;
 
 mongoose.connect(
-  "mongodb://localhost:27017/recipe_db",
+  "mongodb://127.0.0.1:27017/recipe_db",
   { useNewUrlParser: true }
 );
 mongoose.set("useCreateIndex", true);
@@ -62,16 +62,22 @@ router.use(
   })
 );
 
+//Initialize passport.
 router.use(passport.initialize());
+//Configure passport to use sessions in Express.js.
 router.use(passport.session());
+//Configure the user’s login strategy.
 passport.use(User.createStrategy());
+//Set up passport to serialize and deserialize your user data.
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 router.use(connectFlash());
 
 router.use((req, res, next) => {
   res.locals.loggedIn = req.isAuthenticated();
+  //Set up the loggedIn variable to reflect passport login status.
   res.locals.currentUser = req.user;
+  //Set up the currentUser to reflect a logged-in user.
   res.locals.flashMessages = req.flash();
   next();
 });

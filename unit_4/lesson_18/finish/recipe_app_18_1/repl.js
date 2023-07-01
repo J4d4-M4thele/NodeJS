@@ -2,6 +2,7 @@ const mongoose = require("mongoose"),
   Subscriber = require("./models/subscriber"),
   Course = require("./models/course");
 var testCourse, testSubscriber;
+//connecting to recipe database
 mongoose.connect(
   "mongodb://localhost:27017/recipe_db",
   { useNewUrlParser: true }

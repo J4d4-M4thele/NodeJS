@@ -35,6 +35,7 @@ module.exports = {
   new: (req, res) => {
     res.render("users/new");
   },
+  //New user signs up --> display flash message
   create: (req, res, next) => {
     let userParams = getUserParams(req.body);
     User.create(userParams)
@@ -43,7 +44,7 @@ module.exports = {
         res.locals.redirect = "/users";
         res.locals.user = user;
         next();
-      })
+      })//catch error if sth. went wrong
       .catch(error => {
         console.log(`Error saving user: ${error.message}`);
         res.locals.redirect = "/users/new";

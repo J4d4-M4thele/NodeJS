@@ -1,0 +1,4 @@
+Echo Commands for installing MongoDB in folder 
+
+echo %mongo%
+echo %path%

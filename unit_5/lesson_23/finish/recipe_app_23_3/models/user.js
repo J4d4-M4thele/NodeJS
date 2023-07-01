@@ -46,6 +46,7 @@ userSchema.virtual("fullName").get(function() {
   return `${this.name.first} ${this.name.last}`;
 });
 
+//pre-save hook is to encrypt password before storing it in MongoDB user doc
 userSchema.pre("save", function(next) {
   let user = this;
   if (user.subscribedAccount === undefined) {
@@ -70,6 +71,7 @@ userSchema.pre("save", function(next) {
   bcrypt
     .hash(user.password, 10)
     .then(hash => {
+      //Hash the user’s password.
       user.password = hash;
       next();
     })
@@ -79,8 +81,10 @@ userSchema.pre("save", function(next) {
     });
 });
 
+//Add a function to compare hashed passwords.
 userSchema.methods.passwordComparison = function(inputPassword) {
   let user = this;
+  //Compare the user password with the stored password.
   return bcrypt.compare(inputPassword, user.password);
 };
 

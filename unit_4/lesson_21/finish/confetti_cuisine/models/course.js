@@ -1,6 +1,7 @@
 "use strict";
 
 const mongoose = require("mongoose"),
+//require mongoose
   { Schema } = require("mongoose");
 
 var courseSchema = new Schema(
@@ -18,6 +19,7 @@ var courseSchema = new Schema(
       type: Number,
       default: 0,
       min: [0, "Course cannot have a negative number of students"]
+      //doesn't allow negative values
     },
     cost: {
       type: Number,

@@ -1,8 +1,10 @@
 "use strict";
 
+//Require the Express.js Router and usersController
 const router = require("express").Router(),
   usersController = require("../controllers/usersController");
 
+  //Define routes on router object
 router.get("/", usersController.index, usersController.indexView);
 router.get("/new", usersController.new);
 router.post(
@@ -19,4 +21,5 @@ router.put("/:id/update", usersController.update, usersController.redirectView);
 router.get("/:id", usersController.show, usersController.showView);
 router.delete("/:id/delete", usersController.delete, usersController.redirectView);
 
+//export router module
 module.exports = router;

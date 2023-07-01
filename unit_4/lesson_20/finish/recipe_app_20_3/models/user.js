@@ -46,6 +46,7 @@ userSchema.virtual("fullName").get(function() {
 });
 
 userSchema.pre("save", function(next) {
+  //links users and subscribers by email address
   let user = this;
   if (user.subscribedAccount === undefined) {
     Subscriber.findOne({

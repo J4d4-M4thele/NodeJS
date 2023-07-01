@@ -1,7 +1,7 @@
 <h1 class="center">User Data for
   <%= user.fullName %>
 </h1>
-
+<!-- displays subscriber attributes -->
 <table class="table">
   <tr>
     <th>Name</th>
@@ -32,6 +32,7 @@
   <a href="<%=`/subscribers/${user.subscribedAccount}`%>">
     subscribed account </a>.
 </h4>
+<!-- display no. of associated courses -->
 <% } %>
 <div class="center">
   <a class="button" href="<%=`/users/${user._id}/edit`%>">

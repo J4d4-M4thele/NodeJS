@@ -46,6 +46,7 @@ userSchema.virtual("fullName").get(function() {
 });
 
 userSchema.pre("save", function(next) {
+  //.pre invokes function before user is created - hook method in Mongoose 
   let user = this;
   if (user.subscribedAccount === undefined) {
     Subscriber.findOne({
@@ -62,6 +63,8 @@ userSchema.pre("save", function(next) {
   } else {
     next();
   }
+  //person viewing website is first a user 
+  //only once they subscribe are they a subscriber
 });
 
 module.exports = mongoose.model("User", userSchema);

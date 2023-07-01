@@ -10,7 +10,7 @@ app.use(
   })
 );
 app.use(express.json());
-
+//work together to parse URL
 app.use((req, res, next) => {
   console.log(`request made to: ${req.url}`);
   next();

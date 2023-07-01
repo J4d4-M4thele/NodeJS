@@ -9,6 +9,7 @@ const express = require("express"),
   mongoose = require("mongoose"),
   Subscriber = require("./models/subscriber");
 
+  //connection to mongoose
 mongoose.connect(
   "mongodb://localhost:27017/recipe_db",
   { useNewUrlParser: true }
@@ -24,6 +25,7 @@ var myQuery = Subscriber.findOne({
   name: "Jon Wexler"
 }).where("email", /wexler/);
 
+//executes query
 myQuery.exec((error, data) => {
   if (data) console.log(data.name);
 });
@@ -44,8 +46,10 @@ app.use(homeController.logRequestPaths);
 app.get("/name", homeController.respondWithName);
 app.get("/items/:vegetable", homeController.sendReqParam);
 
+//Pass the request to the getAllSubscribers function.
 app.get("/subscribers", subscribersController.getAllSubscribers, (req, res, next) => {
   res.render("subscribers", { subscribers: req.data });
+  //print data from request object
 });
 
 app.get("/", homeController.index);

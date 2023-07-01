@@ -20,7 +20,7 @@ const express = require("express"),
 mongoose.Promise = global.Promise;
 
 mongoose.connect(
-  "mongodb://localhost:27017/recipe_db",
+  "mongodb://127.0.0.1:27017/recipe_db",
   { useNewUrlParser: true }
 );
 mongoose.set("useCreateIndex", true);
@@ -48,9 +48,11 @@ router.use(
   })
 );
 
+//Configure your Express.js application to use cookie-parser as middleware.
 router.use(express.json());
 router.use(cookieParser("secret_passcode"));
 router.use(
+
   expressSession({
     secret: "secret_passcode",
     cookie: {
@@ -58,8 +60,10 @@ router.use(
     },
     resave: false,
     saveUninitialized: false
+    //Configure express session to use cookie-parser.
   })
 );
+//Configure your application to use connect-flash as middleware.
 router.use(connectFlash());
 
 router.use((req, res, next) => {
@@ -75,7 +79,13 @@ router.get("/contact", homeController.getSubscriptionPage);
 router.get("/users", usersController.index, usersController.indexView);
 router.get("/users/new", usersController.new);
 router.post("/users/create", usersController.validate, usersController.create, usersController.redirectView);router.get("/users/login", usersController.login);
+//Add a route to handle GET requests made to the /users/login path.
 router.get("/users/login", usersController.login);
+//checks against passowrd in database to see if it's true
+//will only redirect if password matches
+
+//parameterized routes(contain ids) are below non-parameterizedroutes
+//for both users and subscribers
 router.post("/users/login", usersController.authenticate, usersController.redirectView);
 router.get("/users/:id/edit", usersController.edit);
 router.put("/users/:id/update", usersController.update, usersController.redirectView);

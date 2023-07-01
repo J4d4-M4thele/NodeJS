@@ -28,7 +28,7 @@
 				<span class="button">Users</span>
 			</a>
 		</div>
-
+        <!-- login status -->
 		<div class="login">
 			<% if (loggedIn) { %>
 			<p>Logged in as
@@ -43,6 +43,7 @@
 			<% } %>
 		</div>
 	</div>
+	<!-- display flash messages -->
 	<div class="flashes">
 		<% if (flashMessages) { %>
 		<% if (flashMessages.success) { %>

@@ -15,6 +15,8 @@ const port = 3000,
     res.writeHead(200, {
       "Content-Type": "text/html"
     });
+    //if route is there (in route object)- it isn't empty
+    //then return route value
     if (routeResponseMap[req.url]) {
       res.end(routeResponseMap[req.url]);
     } else {
