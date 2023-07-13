@@ -1,12 +1,16 @@
-//require mongoose
 const mongoose = require('mongoose')
-//create a blog post schema
 const Schema = mongoose.Schema;
+
 const BlogPostSchema = new Schema({
     title: String,
-    body: String
-});
-const BlogPost = mongoose.model('BlogPost',BlogPostSchema);
+    body: String,
+    username: String,
+    datePosted: { /* can declare property type with an object like this because we need 'default' */
+        type: Date,
+        default: new Date()
+    }
+})
 
-//export blogpost model
+const BlogPost = mongoose.model('BlogPost', BlogPostSchema);
+
 module.exports = BlogPost;
