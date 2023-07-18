@@ -1,16 +1,29 @@
 const express = require('express')
-const path = require('path')
+const path = require('path');
 const mongoose = require('mongoose')
+const ejs = require('ejs')
 const fileUpload = require('express-fileupload')
 
 const app = new express()
-const ejs = require('ejs')
-app.set('view engine', 'ejs')
 
 app.use(express.static('public'))
+app.set('view engine', 'ejs')
+app.use(fileUpload());
+
 app.use(express.json())
 app.use(express.urlencoded())
-app.use(fileUpload())
+
+// That is, if Express sees a request from the given url ‘/posts/store’, 
+//then execute the middleware validateMiddleWare. Note: make sure the above statement is after app.use(fileUpload()) since we depend on
+// the req object having the files property. 
+const validateMiddleWare = (req, res, next) => {
+    if (req.files == null || req.body.title == null) {
+        return res.redirect('/posts/new')
+    }
+    next()
+}
+app.use('/posts/store',validateMiddleWare)
+
 
 const BlogPost = require('./models/BlogPost.js')
 
@@ -43,20 +56,22 @@ app.get('/post/:id', async (req, res) => {
     })
 })
 
-app.post('/posts/store', async (req, res) => {
-    let image = req.files.image
-    image.mv(path.resolve(__dirname, 'public/img', image.name),
-        async (error) => {
-            await BlogPost.create({
-                ...req.body,
-                image: '/img/' + image.name
-            })
-            res.redirect('/')
+app.post('/posts/store', (req, res) => {
+    console.log(req.files)
+    let image = req.files.image;
+    image.mv(path.resolve(__dirname, 'public/img', image.name), async (error) => {
+        await BlogPost.create({
+            title: req.body.title,
+            body: req.body.body,
+            username: req.body.username,
+            image: '/img/' + image.name
         })
-
+        res.redirect('/')
+    })
 })
 
 app.listen(4000, () => {
     console.log('App listening on port 4000')
 })
 
+//pg 89
