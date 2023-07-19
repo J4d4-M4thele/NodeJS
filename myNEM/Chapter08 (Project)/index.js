@@ -11,7 +11,7 @@ app.set('view engine', 'ejs')
 app.use(fileUpload());
 
 app.use(express.json())
-app.use(express.urlencoded())
+app.use(express.urlencoded({ extended: true }));
 
 const customMiddleWare = (req, res, next) => {
     console.log('Custom middleware called')
@@ -19,9 +19,6 @@ const customMiddleWare = (req, res, next) => {
 }
 app.use(customMiddleWare)
 
-// That is, if Express sees a request from the given url ‘/posts/store’, then execute the middleware validateMiddleWare. Note: make sure the above statement is after app.use(fileUpload()) since we depend on
-// the req object having the files property. When you run your app and try to submit a create post form with the image field missing, you will be
-// re-directed to the form page. Only when you have all fields filled in will your submission be successful.
 const validateMiddleWare = (req, res, next) => {
     if (req.files == null || req.body.title == null) {
         return res.redirect('/posts/new')
@@ -29,7 +26,6 @@ const validateMiddleWare = (req, res, next) => {
     next()
 }
 app.use('/posts/store', validateMiddleWare)
-//////
 
 const BlogPost = require('./models/BlogPost.js')
 
@@ -80,4 +76,3 @@ app.listen(4000, () => {
     console.log('App listening on port 4000')
 })
 
-//pg 89

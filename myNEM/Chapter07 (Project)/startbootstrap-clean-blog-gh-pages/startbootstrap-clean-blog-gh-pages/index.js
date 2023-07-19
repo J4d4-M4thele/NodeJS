@@ -13,18 +13,6 @@ app.use(fileUpload());
 app.use(express.json())
 app.use(express.urlencoded())
 
-// That is, if Express sees a request from the given url ‘/posts/store’, 
-//then execute the middleware validateMiddleWare. Note: make sure the above statement is after app.use(fileUpload()) since we depend on
-// the req object having the files property. 
-const validateMiddleWare = (req, res, next) => {
-    if (req.files == null || req.body.title == null) {
-        return res.redirect('/posts/new')
-    }
-    next()
-}
-app.use('/posts/store',validateMiddleWare)
-
-
 const BlogPost = require('./models/BlogPost.js')
 
 mongoose.connect('mongodb://127.0.0.1/my_database',

@@ -1,0 +1,4 @@
+ // render register.ejs
+module.exports = (req, res) => {
+    res.render('register')
+}
