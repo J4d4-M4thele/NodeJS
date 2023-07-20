@@ -12,6 +12,7 @@ const validateMiddleware = require('./middleware/validateMiddleware')
 const authMiddleware = require('./middleware/authMiddleware')
 const redirectIfAuthenticatedMiddleware = require('./middleware/redirectIfAuthenticatedMiddleware')
 
+//CHAPTER 11
 const expressSession = require('express-session')
 app.use(expressSession({
     secret: 'keyboard cat'
