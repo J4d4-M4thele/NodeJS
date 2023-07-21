@@ -14,8 +14,8 @@
                     <div class="row gx-4 gx-lg-5 justify-content-center">
                         <div class="col-md-10 col-lg-8 col-xl-7">
                             <div class="page-heading">
-                                <h1>Login</h1>
-                                <!--span class="subheading">Have questions? I have answers.</span-->
+                                <h1>Create New Post</h1>
+                                <span class="subheading">Have questions? I have answers.</span>
                             </div>
                         </div>
                     </div>
@@ -25,33 +25,30 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 col-md-10 mx-auto">
-                        <% if(errors !=null && errors.length> 0){ %>
-                            <ul class="list-group">
-                                <% for (let i = 0; i < errors.length; i++) { %>
-                                    <li class="list-group-item list-group-item-danger">
-                                        <%= errors[i] %>
-                                    </li>
-                                <% } %>
-                            </ul>
-                        <% } %>
-                        <form action="/users/login" method="POST" enctype="multipart/form-data">
+                        <form action="/posts/store" method="POST" enctype="multipart/form-data">
                             <div class="control-group">
                                 <div class="form-group floating-label-form-group controls">
-                                    <label>User Name</label>
-                                    <input type="text" class="form-control" placeholder="User Name" id="username"
-                                        name="username"  >
+                                    <label>Title</label>
+                                    <input type="text" class="form-control" placeholder="Title" id="title" name="title">
                                 </div>
                             </div>
                             <div class="control-group">
                                 <div class="form-group floating-label-form-group controls">
-                                    <label>Password</label>
-                                    <input type="password" class="form-control" placeholder="Password" id="password"
-                                        name="password" >
+                                    <label>Description</label>
+                                    <textarea rows="5" class="form-control" id="body" name="body"></textarea>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="form-group floating-label-form-group controls">
+                                    <label>Image</label>
+                                    <input type="file" class="form-control" id="image" name="image">
                                 </div>
                             </div>
                             <br>
-                            <div class="form-group"></div>
-                            <button type="submit" class="btn btn-primary" id="sendMessageButton">Login</button>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary" id="sendMessageButton">Submit</button>
+                            </div>
                         </form>
                     </div>
                 </div>
